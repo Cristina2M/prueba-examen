@@ -1,0 +1,105 @@
+name: CI Ejercicio completo
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'deploy'
+      - 'release/**'
+      - 'main'
+  pull_request:
+    branches:
+      - 'deploy'
+      - 'release/**'
+
+jobs:
+  verificar-js:
+    name: 1) Verificar archivos .js
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Buscar archivos .js
+        run: |
+          JS_FILES=$(find . -type f -name "*.js")
+          if [ -z "$JS_FILES" ]; then
+            echo "No se encontraron archivos .js en esta rama."
+            exit 1
+          fi
+
+  tests:
+    name: 2) Tests unitarios
+    runs-on: ubuntu-latest
+    needs: verificar-js
+    if: needs.verificar-js.result == 'success'   # solo si verificar-js pasó
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm ci || npm install
+
+      - name: Ejecutar tests
+        run: npm test
+
+      # Paso opcional: mostrar mensaje si fallan los tests
+      - name: Mostrar mensaje si fallan los tests
+        if: failure()
+        run: echo "Los tests unitarios fallaron. Deteniendo el pipeline."
+
+  docs:
+    name: 3) Generar documentación
+    runs-on: ubuntu-latest
+    needs: tests
+    if: needs.tests.result == 'success'          # solo si los tests pasaron
+    outputs:
+      has_docs: ${{ steps.check.outputs.has_docs }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Verificar JSDoc (warnings)
+        run: |
+          set +e
+          npm run lint:docs
+          STATUS=$?
+          if [ $STATUS -ne 0 ]; then
+            echo "::warning::Se detectaron problemas de documentación (JSDoc)."
+          else
+            echo "Verificación JSDoc correcta."
+          fi
+          exit 0
+
+      - name: Construir docs (JSDoc)
+        run: npm run docs:build
+
+      - name: Comprobar que hay docs generadas
+        id: check
+        run: |
+          COUNT=$(find docs -type f -name "*.html" | wc -l | xargs)
+          if [ "$COUNT" -gt 0 ]; then
+            echo "Documentación generada ($COUNT archivos HTML)."
+            echo "has_docs=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No se generó documentación HTML."
+            echo "has_docs=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Si no hay docs, mostrar aviso
+      - name: Avisar falta de documentación
+        if: steps.check.outputs.has_docs == 'false'
+        run: echo "::warning::No se generó documentación. El despliegue se omitirá."

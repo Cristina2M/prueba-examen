@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Reading List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="app-header">
+            <div class="logo-container">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" stroke="#777" stroke-width="4" />
+                    <circle cx="30" cy="30" r="18" stroke="#777" stroke-width="4" />
+                    <circle cx="30" cy="30" r="8" fill="#777" />
+                </svg>
+            </div>
+            <h1>The Reading List</h1>
+        </header>
+
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h2>Book</h2>
+                <form id="add-book-form">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" required placeholder="Titulo de libro">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="author">Author</label>
+                            <input type="text" id="author" required placeholder="A">
+                        </div>
+                        <div class="form-group">
+                            <label for="genre">Genre</label>
+                            <input type="text" id="genre" required placeholder="Terror">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Add Book</button>
+                </form>
+            </aside>
+
+            <main class="main-content">
+                <h2>My Reading List</h2>
+                <div class="books-list" id="books-grid">
+                    <!-- Books will be rendered here as list items -->
+                </div>
+            </main>
+        </div>
+
+        <footer class="app-footer">
+            <p id="stats-footer">Books Read: 0 of 0</p>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
