@@ -175,6 +175,33 @@ jobs:
           echo "Syncing docs/ to s3://$BUCKET/"
           aws s3 sync "docs/" "s3://$BUCKET/" --delete
 
+  deploy-to-ec2:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-dist
+          path: dist
+
+      - name: Create PEM key
+        run: |
+          echo "${{ secrets.EC2_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      - name: Copy files to EC2
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem -r dist/* ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/home/ec2-user/app/
+
+      - name: Move files to Nginx and restart service
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "sudo rm -rf /usr/share/nginx/html/* && sudo mv /home/ec2-user/app/* /usr/share/nginx/html/ && sudo systemctl restart nginx"
+
 
 
 
