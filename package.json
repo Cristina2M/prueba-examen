@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "node test/example.test.js",
+    "lint:docs": "echo \"Lint docs placeholder\"",
     "docs:build": "echo \"Documentation build placeholder\""
   },
   "repository": {
