@@ -82,6 +82,7 @@ class BookList {
     }
 }
 
+
 /**
  * Browser-specific initialization.
  * Sets up DOM references and the main BookList instance.
