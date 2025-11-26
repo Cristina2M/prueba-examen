@@ -144,10 +144,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: Build docs
+        run: npm run build-docs
 
       - name: Sync files to S3
         run: |
-          npm run build
-          aws s3 sync dist/ s3://$S3_BUCKET_NAME/ --delete
+          aws s3 sync docs/ s3://$S3_BUCKET_NAME/ --delete
         env:
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
