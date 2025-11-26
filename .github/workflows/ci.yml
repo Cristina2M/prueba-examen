@@ -103,31 +103,31 @@ jobs:
       - name: Avisar falta de documentación
         if: steps.check.outputs.has_docs == 'false'
         run: echo "::warning::No se generó documentación. El despliegue se omitirá."
-        
+
     deploy-vercel:
-    name: 4) Deploy a Vercel (producción)
-    runs-on: ubuntu-latest
-    needs: docs
-    if: needs.docs.outputs.has_docs == 'true'   # despliega solo si hay docs
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5.0.0
+      name: 4) Deploy a Vercel (producción)
+      runs-on: ubuntu-latest
+      needs: docs
+      if: needs.docs.outputs.has_docs == 'true'   # despliega solo si hay docs
+      env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v5.0.0
 
-      - name: Instalar CLI de Vercel
-        run: npm install -g vercel@latest
+        - name: Instalar CLI de Vercel
+          run: npm install -g vercel@latest
 
-      # Comprobación de seguridad antes del deploy
-      - name: Verificar token
-        if: env.VERCEL_TOKEN == ''
-        run: |
-          echo "No se encontró el token de Vercel. Agrega VERCEL_TOKEN en los secrets."
-          exit 1
+        # Comprobación de seguridad antes del deploy
+        - name: Verificar token
+          if: env.VERCEL_TOKEN == ''
+          run: |
+            echo "No se encontró el token de Vercel. Agrega VERCEL_TOKEN en los secrets."
+            exit 1
 
-      - name: Desplegar a Vercel (prod)
-        run: vercel --prod --yes --token "$VERCEL_TOKEN"   
+        - name: Desplegar a Vercel (prod)
+          run: vercel --prod --yes --token "$VERCEL_TOKEN"   
 
-      - name: Confirmar despliegue
-        if: success()
-        run: echo "Despliegue a Vercel completado correctamente."
+        - name: Confirmar despliegue
+          if: success()
+          run: echo "Despliegue a Vercel completado correctamente."
