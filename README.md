@@ -29,3 +29,22 @@
    ```
 
 Con estos pasos tu repositorio local queda sincronizado con el repositorio remoto en GitHub.
+
+## Pasos adicionales (npm)
+
+1. **Crear/Corregir `package.json`**  
+   ```bash
+   npm init -y
+   ```
+2. **Instalar dependencias y generar `package-lock.json`**  
+   ```bash
+   npm install
+   ```
+3. **Commit y push de los archivos de npm**  
+   ```bash
+   git add package.json package-lock.json
+   git commit -m "Add package.json and lockfile"
+   git push origin main   # o la rama que estés usando
+   ```
+
+Con estos archivos presentes, el paso `npm ci` del workflow se ejecutará sin errores.

@@ -4,7 +4,7 @@
   "description": "1. **Verificar el estado del repositorio local**  \r    ```bash\r    git status\r    ```",
   "main": "index.js",
   "directories": {
-    "test": "test"
+    "test": "node test/*.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
