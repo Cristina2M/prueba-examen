@@ -151,6 +151,9 @@ jobs:
 
       - name: Build docs
         run: npm run build-docs
+      
+      - name: Verificar variable del bucket
+        run: echo "El bucket a usar es $S3_BUCKET_NAME"
 
       - name: Sync files to S3
         run: aws s3 sync docs/ s3://$S3_BUCKET_NAME/ --delete
