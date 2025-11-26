@@ -153,4 +153,10 @@ jobs:
         run: npm run build-docs
 
       - name: Sync files to S3
-        run: aws s3 sync docs/ s3://$S3_BUCKET_NAME/ --delete
+        uses: aws-actions/s3-sync@v2
+        with:
+          source-dir: 'docs/'
+          dest-dir: '/'
+          bucket: ${{ secrets.S3_BUCKET_NAME }}
+          delete: true
+
