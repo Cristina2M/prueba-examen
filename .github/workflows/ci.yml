@@ -170,7 +170,11 @@ jobs:
         run: echo "Bucket a usar '$S3_BUCKET_NAME'"
 
       - name: Sync files to S3
-        run: aws s3 sync "docs/" "s3://$S3_BUCKET_NAME/" --delete
+        run: |
+          BUCKET=$(echo "$S3_BUCKET_NAME" | xargs)  # elimina espacios al inicio y final
+          echo "Syncing docs/ to s3://$BUCKET/"
+          aws s3 sync "docs/" "s3://$BUCKET/" --delete
+
 
 
 
