@@ -82,6 +82,10 @@ class BookList {
     }
 }
 
+/**
+ * Browser-specific initialization.
+ * Sets up DOM references and the main BookList instance.
+ */
 // --- DOM Elements & Initialization ---
 if (typeof document !== 'undefined') {
     const booksGrid = document.getElementById('books-grid');
@@ -168,6 +172,9 @@ if (typeof document !== 'undefined') {
     updateUI();
 }
 
+/**
+ * Export the classes for Node.js testing environments.
+ */
 // Export for testing
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { Book, BookList };

@@ -30,6 +30,8 @@
 
 Con estos pasos tu repositorio local queda sincronizado con el repositorio remoto en GitHub.
 
+
+
 ## Pasos adicionales (npm)
 
 1. **Crear/Corregir `package.json`**  
@@ -48,3 +50,16 @@ Con estos pasos tu repositorio local queda sincronizado con el repositorio remot
    ```
 
 Con estos archivos presentes, el paso `npm ci` del workflow se ejecutará sin errores.
+
+
+## Generar documentación
+
+```bash
+npm install               # (solo la primera vez)
+npm run docs:build        # genera HTML en la carpeta ./docs
+```
+Instalar JSDoc
+```bash
+npm install --save-dev jsdoc@^4.0.0
+```
+Crear jsdoc.json
