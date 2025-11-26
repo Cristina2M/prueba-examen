@@ -57,6 +57,7 @@ Con estos archivos presentes, el paso `npm ci` del workflow se ejecutará sin er
 ```bash
 npm install               # (solo la primera vez)
 npm run docs:build        # genera HTML en la carpeta ./docs
+npm run build-docs
 ```
 Instalar JSDoc
 ```bash
