@@ -9,7 +9,7 @@
   "scripts": {
     "test": "node test/main.test.js",
     "lint:docs": "echo \"Lint docs placeholder\"",
-    "docs:build": "jsdoc -c jsdoc.json"
+    "docs:build": "npx jsdoc -c jsdoc.json"
   },
   "repository": {
     "type": "git",
