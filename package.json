@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "node test/main.test.js",
+    "lint:docs": "echo 'No hay validación de documentación configurada'",
     "docs:build": "npx jsdoc -c jsdoc.json",
     "build-docs": "mkdir -p docs && cp src/index.html docs/index.html && cp -r src/styles.css src/app.js docs/"
   },
