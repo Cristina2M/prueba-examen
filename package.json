@@ -7,7 +7,7 @@
     "test": "node test/*.js"
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "node test/main.test.js",
     "docs:build": "jsdoc -c jsdoc.json",
     "build-docs": "mkdir -p docs && cp src/index.html docs/index.html && cp -r src/styles.css src/app.js docs/"
   },
