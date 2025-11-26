@@ -7,7 +7,8 @@
     "test": "node test/*.js"
   },
   "scripts": {
-    "test": "node test/example.test.js"
+    "test": "node test/example.test.js",
+    "docs:build": "echo \"Documentation build placeholder\""
   },
   "repository": {
     "type": "git",
